@@ -1,0 +1,110 @@
+@model Movie
+
+<nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Movies" asp-action="Index">Movies</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Details</li>
+        </ol>
+</nav>
+
+<h3 class="mt=4 mb-4" style ="padding-left:16px">Movie</h3>
+<h6 style ="padding-left:16px">Details</h6> 
+
+<div class="container">
+   <div class="row">
+      <!---- col 1: description list of movie details -->
+      <div class="col-8"> 
+         <dl class="row">
+            <dt class="col-sm-3">Title</dt>
+            <dd class="col-sm-9">@Model.Title</dd>
+    
+            <dt class="col-sm-3">Director</dt>
+            <dd class="col-sm-9">@Model.Director</dd>
+        
+            <dt class="col-sm-3">Year</dt>
+            <dd class="col-sm-9">@Model.Year</dd>
+
+            <dt class="col-sm-3">Budget</dt>
+            <dd class="col-sm-9">$@Model.Budget million</dd>
+
+            <dt class="col-sm-3">Genre</dt>
+            <dd class="col-sm-9">@Model.Genre</dd>
+
+            <dt class="col-sm-3">Cast</dt>
+            <dd class="col-sm-9">@Model.Cast</dd>
+
+            <dt class="col-sm-3">Rating</dt>
+            <dd class="col-sm-9">@Model.Rating%</dd>
+
+            <dt class="col-sm-3">Duration</dt>
+            <dd class="col-sm-9">@Model.Duration mins</dd> 
+
+            <dt class="col-sm-3">Plot</dt>
+            <dd class="col-sm-9">@Model.Plot</dd> 
+         </dl>  
+      </div>
+
+      <!-- col2: Poster url to displayed on the right -->
+      <div class="col-3">
+         <div>
+          <img src = @Model.PosterUrl   
+            class="float-right img-fluid" style="padding-right: 20px;" alt="Responsive Image" width="300" height="500"/>
+         </div>
+         <div class="col" style="padding-top: 100px" style="padding-left:400px">  
+               <!-- <a href="Edit.cshtml" class= "btn btn-primary btn-sm">Edit Movie</a> -->
+               <a asp-action="Edit" asp-route-id=@Model.Id class="btn btn-link btn-sm"> <i class="material-icons">edit</i>Edit Movie</a>
+                <a asp-action="Index" class="btn btn-sm btn-link"><i class="material-icons">arrow_back</i> Back to List</a>
+         </div> 
+      </div>
+      
+     
+   </div> <!-- row -->
+
+<!-- container -->  
+
+
+<h6>Reviews</h6>  
+<table class="table table-sm">
+   <thead>
+      <tr class="bg-warning">
+         <th>Created</th>
+         <th>Name</th>
+         <th>Comment</th>
+         <th>Rating 1-10</th>
+      </tr>
+
+   </thead>
+   <tbody>
+      <!-- a foreach loop to generate each row for reviews  -->
+      @foreach (var r in Model.Reviews)
+      {
+          <tr>
+              <td>@r.CreatedOn</td>
+              <td>@r.Name</td>
+              <td>@r.Comment</td>
+              <td>@r.Rating 
+                 <a asp-action="DeleteReview" asp-route-id=@Model.Id class="btn btn-link btn-sm" style = "padding-left: 70px">Delete</a> 
+              </td>
+              
+              <!-- <td> 
+                   <a asp-action="DeleteReview" asp-route-id=@Model.Id class="btn btn-link btn-sm">Delete</a>
+               </td> -->
+
+          </tr>
+      }
+      
+   </tbody>
+
+</table>
+
+</div>
+
+<div class="mt-4 mb-3">
+   
+      <a asp-action="AddReview" asp-route-id=@Model.Id class="btn btn-link btn-sm"> <i class="material-icons">note_add</i>Add Review</a>
+   
+</div> 
+
+
+
